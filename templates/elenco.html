@@ -1,0 +1,53 @@
+<html>
+
+<head>
+</head>
+
+<body>
+    <style>
+        
+
+        .menu {
+            background-color: #ffffff;
+            color: #ffffff;
+            
+            float: right;
+            padding-right: 45%;
+            padding-top: 25%;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 16px;
+            right: 80px;
+            border: none;
+            cursor: pointer;
+
+        }
+        input[type=submit]{
+            height: 50px; 
+            width: 100px;
+            color:blue;
+            margin-top: 27%;
+            margin-left: 18%;
+
+        }
+
+        
+        
+    </style>
+    <div class="menu">
+        <form action="/info_p" method="GET">
+            <select name="info">
+                <option value="Popolazioneresidenti">Popolazioneresidenti</option>
+                <option value="Superficiekm²">Superficiekm²</option>
+                <option value="Densitàabitanti/km²">Densitàabitanti/km²</option>
+                <option value="NumeroComuni">NumeroComuni</option>
+                <option value="Grafico_Covid">Grafico_Covid</option>
+            </select>
+            
+    <div class="menu_button">
+            <input type="submit" value="Submit" />
+    </div>
+        </form>
+    </div>
+</body>
+
+</html>

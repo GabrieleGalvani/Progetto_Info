@@ -4,7 +4,7 @@ app = Flask(__name__)
 import folium
 import io
 import geopandas as gpd
-import contextily
+import contextily as ctx
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
 import matplotlib
@@ -19,7 +19,7 @@ df = pd.read_csv('https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati
 Regioni =  gpd.read_file('/workspace/Progetto_Info/Reg01012021_g_WGS84.zip')
 province = gpd.read_file('/workspace/Progetto_Info/ProvCM01012021_g_WGS84.zip')
 prov = pd.read_html('https://www.tuttitalia.it/province/')[0]
-prov.filter(items=['Provincia/Città Metropolitana', 'Popolazioneresidenti	','Superficiekm²','Densitàabitanti/km²','NumeroComuni',]).reset_index(drop=True)
+prov.filter(items=['Provincia/Città Metropolitana', 'Popolazioneresidenti   ','Superficiekm²','Densitàabitanti/km²','NumeroComuni',]).reset_index(drop=True)
 prov['SIGLA']=prov['Provincia/Città Metropolitana'].str[:2]
 info_prov = pd.merge(prov,province,how='inner',on ='SIGLA')
 info_prov.filter(items=['DEN_PROV','SIGLA','Popolazioneresidenti','Superficiekm²','Densitàabitanti/km²','NumeroComuni','geometry'])
@@ -38,13 +38,14 @@ def prehome():
 
 @app.route('/regione/<nome_regione>', methods=['GET'])
 def regione(nome_regione):
-    global dati_regione, nome_reg,confini_regione,province_regione
+    global dati_regione, nome_reg,confini_regione,province_regione,province_regione2
+
     nome_reg = nome_regione
     regioni1 = regioni.copy(deep=True)
     dati_regione = Regioni[Regioni["DEN_REG"] == nome_regione]
     confini_regione = Regioni[Regioni.touches(dati_regione.geometry.squeeze())]
     province_regione = province[province.within(dati_regione.geometry.squeeze())]
-    province_regione1 = info_prov[info_prov.within(dati_regione.geometry.squeeze())][['DEN_UTS','SIGLA','Popolazioneresidenti','Superficiekm²','Densitàabitanti/km²']]
+    province_regione1 = info_prov[info_prov.within(dati_regione.geometry.squeeze())][['DEN_UTS','SIGLA','Popolazioneresidenti','Superficiekm²','Densitàabitanti/km²','NumeroComuni']]
     province_regione2 = info_prov[info_prov.within(dati_regione.geometry.squeeze())]
     lst = province_regione.DEN_PROV.to_list()
     lst1 = confini_regione.DEN_REG.to_list()
@@ -66,17 +67,39 @@ def regionepng():
    
     province_regione.to_crs(epsg=3857).plot(ax=ax,facecolor='none', edgecolor="r")
     dati_regione.to_crs(epsg=3857).plot(ax=ax,facecolor='none', edgecolor="k")
-    contextily.add_basemap(ax=ax)  
+    ctx.add_basemap(ax=ax)  
 
     output = io.BytesIO()
     FigureCanvas(fig).print_png(output)
     return Response(output.getvalue(), mimetype='image/png')
 
-@app.route('/info_regione', methods=['GET'])
-def info():
+@app.route('/info_p', methods=['GET'])
+def informazioni():
+    global info
+    info = request.args['info']
+    if info == 'Grafico_Covid':
+        return redirect(url_for('grafico'))
+    else:
+        return redirect(url_for('scelta'))
 
-    return render_template('info.html')
 
+@app.route('/scelta', methods=['GET'])
+def scelta():
+    global province_regione2
+    province_regione2[info] = province_regione2[info].astype(str)
+    province_regione2[info] = province_regione2[info].str.replace('.', '')
+    province_regione2[info] = province_regione2[info].str.replace(',', '')
+    province_regione2[info] = province_regione2[info].astype(int)
+    return render_template('grafico_utente.html',info=info,regione=nome_reg)
+
+@app.route('/grafico_utente', methods=['GET'])
+def grafico_utente():
+    fig, ax = plt.subplots(figsize = (12,8))
+    province_regione2.to_crs(3857).plot(ax=ax,column=info,legend=True)
+    ctx.add_basemap(ax = ax)
+    output = io.BytesIO()
+    FigureCanvas(fig).print_png(output)
+    return Response(output.getvalue(), mimetype='image/png')
 
 @app.route("/grafico", methods=["GET"])
 def grafico():
@@ -93,7 +116,10 @@ def grafico():
 
     return render_template("grafico.html")
 
+@app.route("/elenco", methods=["GET"])
+def elenco():
 
+    return render_template('elenco.html')
 
 @app.route("/grafico.png", methods=["GET"])
 def graficopng():
