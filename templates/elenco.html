@@ -2,52 +2,77 @@
 
 <head>
 </head>
+<style>
+    body {
+
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 24px;
+    }
+
+    .menu {
+        background-color: black;
+        color: #ffffff;
+        border: none;
+        cursor: pointer;
+        position: fixed;
+        left: 50%;
+        top: 50%;
+
+
+    }
+
+    input[type=submit] {
+        height: 40px;
+        width: 80px;
+        color: blue;
+        position: fixed;
+
+    }
+
+    .submitbutton {}
+
+    .bottone {
+        bottom: 0;
+        left: 30%;
+        margin: auto;
+        position: absolute;
+
+    }
+
+    #myvideo {
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        min-width: 100%;
+        min-height: 100%;
+    }
+
+    .tendina {
+        font-size: 20px;
+    }
+</style>
 
 <body>
-    <style>
-        
+    <video autoplay muted loop id="myvideo">
+        <source src="static/images/1 MINUTE OF ITALY  TRAVEL VIDEO.mp4" type="video/mp4">
+    </video>
+    <form action="/info_p" method="GET">
+        <div class="menu">
 
-        .menu {
-            background-color: #ffffff;
-            color: #ffffff;
-            
-            float: right;
-            padding-right: 45%;
-            padding-top: 25%;
-            font-family: 'Times New Roman', Times, serif;
-            font-size: 16px;
-            right: 80px;
-            border: none;
-            cursor: pointer;
-
-        }
-        input[type=submit]{
-            height: 50px; 
-            width: 100px;
-            color:blue;
-            margin-top: 27%;
-            margin-left: 18%;
-
-        }
-
-        
-        
-    </style>
-    <div class="menu">
-        <form action="/info_p" method="GET">
-            <select name="info">
+            <select class="tendina" name="info">
                 <option value="Popolazioneresidenti">Popolazioneresidenti</option>
                 <option value="Superficiekm²">Superficiekm²</option>
                 <option value="Densitàabitanti/km²">Densitàabitanti/km²</option>
                 <option value="NumeroComuni">NumeroComuni</option>
                 <option value="Grafico_Covid">Grafico_Covid</option>
             </select>
-            
-    <div class="menu_button">
-            <input type="submit" value="Submit" />
-    </div>
-        </form>
-    </div>
+
+            <div class="bottone">
+                <input class="submitbutton" type="submit" value="Submit" />
+            </div>
+
+        </div>
+    </form>
 </body>
 
 </html>

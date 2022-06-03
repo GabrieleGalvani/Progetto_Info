@@ -1,25 +1,54 @@
 <html>
 
 <head>
-    <h1>Scegli una Regione d'Italia</h1>
+
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 </head>
 <style>
-    
- 
+    body {
+        font-family: 'Times New Roman', Times, serif;
 
-    
-    
+    }
+
+    .colonna {
+        float: left;
+        width: 50%;
 
 
+    }
 
+    .italia {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        width: 50%;
+        text-align: center;
+        flex-direction: column;
 
-    
+    }
+
+    .colonna table {
+        border-color: blue;
+        font-size: 20px;
+    }
+
+    .tabella {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        width: 50%;
+
+    }
 </style>
 
 <body>
+
     <div class="riga">
-        <div class="colonna">
+        <div class="colonna italia">
+            <h1>Scegli una Regione d'Italia</h1>
+
 
             <img src=/static/images/italia_politica.jpg usemap="#Italiapolitica" aling="middle">
             <map name="Italiapolitica">
@@ -77,7 +106,7 @@
 
             </map>
         </div>
-        <div class="colonna">
+        <div class="colonna tabella">
             {{regioni|safe}}
         </div>
     </div>
