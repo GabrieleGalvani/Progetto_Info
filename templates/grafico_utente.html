@@ -12,6 +12,7 @@
         font-family: 'Times New Roman', Times, serif;
         font-size: 24px;
     }
+
     .titolomappa {
         font-size: 50px;
         font-weight: bold;
@@ -22,13 +23,21 @@
         justify-content: center;
 
     }
+
+    .botinfo {
+        height: 50px;
+        width: 100px;
+        margin: 13px;
+        color: blue;
+    }
 </style>
 
 <body>
     <div class="wrapper">
         <div class="titolomappa">{{regione}} in base a {{info}}<br><img src="/grafico_utente"></div>
+
         <form action='/posthome' target="_blank">
-            <input type="submit" value="Homepage">
+            <input class="botinfo" type="submit" value="Homepage">
         </form>
     </div>
 </body>

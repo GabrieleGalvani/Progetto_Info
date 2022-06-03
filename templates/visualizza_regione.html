@@ -15,46 +15,57 @@
 
 <body>
     <h1 class="regione1">{{regione}}</h1>
-    <div class= "tabellainfo">
-    {{tabella|safe}}
+    <div class="tabellainfo">
+        {{tabella|safe}}
     </div>
     <style>
         .colonna {
             float: left;
             width: auto;
         }
-        .tabellainfo table{
-            border-color:blue;
+
+        .tabellainfo table {
+            border-color: blue;
         }
+
         .tabprov {
             margin-top: 5%;
         }
 
         .tabprov table {
-            border-color:blue;
+            border-color: blue;
         }
 
         .scrittaprov {
             font-family: 'Times New Roman';
             font-size: 50px;
         }
+
         .regione1 {
             font-family: 'Times New Roman';
             font-size: 50px;
-           
+
+        }
+
+        .botinfo {
+            height: 50px;
+            width: 100px;
+            margin: 13px;
+            color: blue;
         }
     </style>
     <div class="riga">
         <div class="colonna">
             <img src="/mappa.png"><br>
             <form action='/' target="_blank">
-                <input type="submit" value="Homepage">
+                <input class="botinfo" type="submit" value="Homepage">
             </form>
+            
+                <form action='/elenco' target="_blank">
 
-            <form action='/elenco' target="_blank">
-                
-                <input type="submit" value="Informazioni_regione">
-            </form>
+                    <input class="botinfo" type="submit" value="Informazioni">
+                </form>
+            
         </div>
     </div>
 
@@ -62,7 +73,7 @@
         <h1 class="scrittaprov">Province</h1>
         {{info|safe}}
     </div>
- 
+
 </body>
 
 </html>
