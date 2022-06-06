@@ -26,12 +26,12 @@ info_prov.filter(items=['DEN_PROV','SIGLA','Popolazioneresidenti','Superficiekm�
 info_prov = info_prov.set_geometry("geometry")
 regioni = pd.read_html('https://www.tuttitalia.it/regioni/popolazione/')[0]
 regioni = regioni.filter(items=['Regione', 'Popolazioneresidenti','Superficiekm²','Densitàabitanti/km²','NumeroComuni','NumeroProvince']).reset_index(drop=True)
-
+#l'utente visualizza pagina d'introduzione
 @app.route('/', methods=['GET'])
 def home():
     
     return render_template('posthome.html')
-
+#l/utente visualizza la mappa interattiva dell'Italia più una tabella contenente le informazioni di tutte le Regioni-
 @app.route('/posthome', methods=['GET'])
 def prehome():
     
@@ -101,7 +101,7 @@ def grafico_utente():
     output = io.BytesIO()
     FigureCanvas(fig).print_png(output)
     return Response(output.getvalue(), mimetype='image/png')
-
+#app route contenente le stringhe di codici necessarie per la creazione del grafico del covid più la visualizzazione del grafico
 @app.route("/grafico", methods=["GET"])
 def grafico():
     global df, df1,df3,ultima_data,prima_data
@@ -121,7 +121,7 @@ def grafico():
 def elenco():
 
     return render_template('elenco.html')
-
+#app route dove si crea effetivamente il grafico del covid
 @app.route("/grafico.png", methods=["GET"])
 def graficopng():
     fig, ax = plt.subplots(figsize = (12,8))
