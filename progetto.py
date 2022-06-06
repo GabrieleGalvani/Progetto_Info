@@ -107,7 +107,7 @@ def grafico():
     global df, df1,df3,ultima_data,prima_data
     df3 = df
     df3['data'] = pd.to_datetime(df['data'])
-    df['periodo']= df3['data'] #.dt.to_period('D')
+    df['periodo']= df3['data'] 
     df1 = df.filter(items=['denominazione_regione', 'periodo','totale_positivi_test_molecolare'])
     df1.dropna(subset = ["totale_positivi_test_molecolare"], inplace=True)
     df = df[~df.denominazione_regione.str.contains("P.A.")]
@@ -127,10 +127,6 @@ def graficopng():
     fig, ax = plt.subplots(figsize = (12,8))
     
     dfrisultato = df1[df1['denominazione_regione'] == nome_reg]
-   
-    # print(dfrisultato.dtypes)
-
-    # dfrisultato["periodo"] = dfrisultato["periodo"].astype(str)
     ax.plot(dfrisultato.periodo, dfrisultato.totale_positivi_test_molecolare)
     plt.title(f'Andamento Covid da {prima_data} a {ultima_data}', fontsize=25)
     ax.set_title(f' Andamento Covid da {prima_data} a {ultima_data}', fontname="Times New Roman", size=20,fontweight="bold")
