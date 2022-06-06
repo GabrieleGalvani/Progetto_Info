@@ -83,7 +83,7 @@ def informazioni():
     else:
         return redirect(url_for('scelta'))
 
-
+#modifica la colonna scelta dall'utente per renderla un intero 
 @app.route('/scelta', methods=['GET'])
 def scelta():
     global province_regione2
@@ -92,7 +92,7 @@ def scelta():
     province_regione2[info] = province_regione2[info].str.replace(',', '')
     province_regione2[info] = province_regione2[info].astype(int)
     return render_template('grafico_utente.html',info=info,regione=nome_reg)
-
+#grafico in base alla scelta dell'utente
 @app.route('/grafico_utente', methods=['GET'])
 def grafico_utente():
     fig, ax = plt.subplots(figsize = (12,8))
