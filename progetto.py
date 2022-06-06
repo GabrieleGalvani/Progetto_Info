@@ -36,7 +36,7 @@ def home():
 def prehome():
     
     return render_template('home.html',regioni = regioni.to_html())
-
+#l'utente seleziona la regione ed il sito gli restituisce la mappa della regione con i dataframe contenenti le informazione sulla regione e province
 @app.route('/regione/<nome_regione>', methods=['GET'])
 def regione(nome_regione):
     global dati_regione, nome_reg,confini_regione,province_regione,province_regione2
@@ -60,7 +60,7 @@ def regione(nome_regione):
     regioni1['regioni_confinanti'].astype(str)
     return render_template('visualizza_regione.html',regione=nome_regione,info=province_regione1.to_html(), tabella =informazioni_regione_selezionata.to_html())
 
-
+#mappa della regione selezionata con i confini delle province
 @app.route('/mappa.png', methods=['GET'])
 def regionepng():
     fig, ax = plt.subplots(figsize = (12,8))
@@ -73,7 +73,7 @@ def regionepng():
     output = io.BytesIO()
     FigureCanvas(fig).print_png(output)
     return Response(output.getvalue(), mimetype='image/png')
-
+#se l'utente sceglie di visualizzare il grafico viene mandato nell'approute grafico altrimenti va in scelta
 @app.route('/info_p', methods=['GET'])
 def informazioni():
     global info
